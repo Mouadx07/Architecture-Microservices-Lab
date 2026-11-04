@@ -1,38 +1,35 @@
 package org.example.service;
 
 import org.example.dao.ProductDAO;
-import org.example.model.Product;
+import org.example.entities.Product;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
-@Transactional
+@Transactional // chaque methode publique s'execute dans une transaction
 public class ProductService {
 
     private final ProductDAO productDAO;
 
-    // Injection de dépendance par constructeur
     public ProductService(ProductDAO productDAO) {
         this.productDAO = productDAO;
     }
 
-    public void save(Product product) {
+    public void ajouter(Product product) {
         productDAO.save(product);
     }
 
-    @Transactional(readOnly = true)
-    public Product findById(Long id) {
+    public Product chercher(Long id) {
         return productDAO.findById(id);
     }
 
-    @Transactional(readOnly = true)
-    public List<Product> findAll() {
+    public List<Product> lister() {
         return productDAO.findAll();
     }
 
-    public void delete(Long id) {
+    public void supprimer(Long id) {
         productDAO.delete(id);
     }
 }

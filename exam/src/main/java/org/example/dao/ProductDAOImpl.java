@@ -1,6 +1,6 @@
 package org.example.dao;
 
-import org.example.model.Product;
+import org.example.entities.Product;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
@@ -16,34 +16,32 @@ public class ProductDAOImpl implements ProductDAO {
         this.sessionFactory = sessionFactory;
     }
 
-    private Session getSession() {
+    // Session liee a la transaction ouverte par @Transactional dans le service
+    private Session session() {
         return sessionFactory.getCurrentSession();
     }
 
     @Override
     public void save(Product product) {
-        Session session = getSession();
-        session.persist(product);
+        session().persist(product);
     }
 
     @Override
     public Product findById(Long id) {
-        Session session = getSession();
-        return session.get(Product.class, id);
+        return session().get(Product.class, id);
     }
 
     @Override
     public List<Product> findAll() {
-        Session session = getSession();
-        return session.createQuery("from Product", Product.class).getResultList();
+        // HQL : on interroge l'entite Product, pas la table
+        return session().createQuery("from Product p order by p.id", Product.class).getResultList();
     }
 
     @Override
     public void delete(Long id) {
-        Session session = getSession();
-        Product product = session.get(Product.class, id);
+        Product product = session().get(Product.class, id);
         if (product != null) {
-            session.remove(product);
+            session().remove(product);
         }
     }
 }

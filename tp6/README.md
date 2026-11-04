@@ -340,6 +340,27 @@ spring.jpa.database-platform=org.hibernate.dialect.MySQLDialect
 
 ---
 
+## 🎨 React Frontend (Studently Pro)
+
+A modern, elite React frontend with Tailwind CSS, Lucide icons, and Recharts is located in `frontend/`. It implements every utility exposed in the Swagger / OpenAPI documentation.
+
+### Features
+- **Live Backend Connection**: Live ping indicator measuring latency to Spring Boot on `localhost:8080`.
+- **Student CRUD**: Complete Create, Read, Update, and Delete operations with age calculations and initials avatar.
+- **Demographics & Analytics**: Interactive Recharts bar and donut charts visualizing the custom JPQL `GET /students/byYear` query.
+- **Swagger / OpenAPI Live Console**: Interactive API playground consuming `/v3/api-docs` directly inside the app.
+- **Export & Seed**: Export data to CSV/JSON and one-click demo data seeding.
+
+### Running the Frontend
+```bash
+cd frontend
+npm install
+npm run dev
+```
+Open **`http://localhost:3000`** in your browser.
+
+---
+
 ## 👤 Author
 
 Developed as part of the Microservices & Spring Boot practical lab series.

@@ -6,18 +6,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class NotificationManager {
 
-    private final NotificationService notificationService;
+    private final NotificationService service;
 
-    // Injection de dépendances par constructeur avec sélection du service Email via @Qualifier
-    public NotificationManager(@Qualifier("emailNotificationService") NotificationService notificationService) {
-        this.notificationService = notificationService;
+    // Injection par constructeur : deux beans NotificationService existent,
+    // @Qualifier("email") indique a Spring lequel choisir.
+    public NotificationManager(@Qualifier("email") NotificationService service) {
+        this.service = service;
     }
 
-    public void envoyerNotification(String message) {
-        this.notificationService.envoyer(message);
-    }
-
-    public NotificationService getNotificationService() {
-        return notificationService;
+    public void notifier(String message) {
+        service.envoyer(message);
     }
 }

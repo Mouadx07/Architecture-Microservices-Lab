@@ -1,0 +1,88 @@
+{
+  "info": {
+    "name": "TP7 - API Banque JAX-RS",
+    "description": "Requêtes CRUD sur /banque/comptes (JSON et XML)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8082/banque" }
+  ],
+  "item": [
+    {
+      "name": "Lister les comptes (JSON)",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Accept", "value": "application/json" }],
+        "url": "{{baseUrl}}/comptes"
+      }
+    },
+    {
+      "name": "Lister les comptes (XML)",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Accept", "value": "application/xml" }],
+        "url": "{{baseUrl}}/comptes"
+      }
+    },
+    {
+      "name": "Consulter un compte",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Accept", "value": "application/json" }],
+        "url": "{{baseUrl}}/comptes/1"
+      }
+    },
+    {
+      "name": "Créer un compte (JSON)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Accept", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"solde\": 7500.0,\n  \"dateCreation\": \"2026-11-04\",\n  \"type\": \"COURANT\"\n}"
+        },
+        "url": "{{baseUrl}}/comptes"
+      }
+    },
+    {
+      "name": "Créer un compte (XML)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/xml" },
+          { "key": "Accept", "value": "application/xml" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "<compte>\n  <solde>5000.0</solde>\n  <type>EPARGNE</type>\n</compte>"
+        },
+        "url": "{{baseUrl}}/comptes"
+      }
+    },
+    {
+      "name": "Modifier un compte",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Accept", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"solde\": 12000.0,\n  \"dateCreation\": \"2026-11-04\",\n  \"type\": \"EPARGNE\"\n}"
+        },
+        "url": "{{baseUrl}}/comptes/1"
+      }
+    },
+    {
+      "name": "Supprimer un compte",
+      "request": {
+        "method": "DELETE",
+        "url": "{{baseUrl}}/comptes/2"
+      }
+    }
+  ]
+}

@@ -5,36 +5,34 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
-import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
-@EnableTransactionManagement
+@EnableTransactionManagement // active @Transactional
 public class HibernateConfig {
 
+    // Le DataSource est cree par Spring Boot depuis application.properties
     @Bean
     public LocalSessionFactoryBean sessionFactory(DataSource dataSource) {
-        LocalSessionFactoryBean sessionFactoryBean = new LocalSessionFactoryBean();
-        sessionFactoryBean.setDataSource(dataSource);
-        sessionFactoryBean.setPackagesToScan("org.example.model");
+        LocalSessionFactoryBean factory = new LocalSessionFactoryBean();
+        factory.setDataSource(dataSource);
+        factory.setPackagesToScan("org.example.entities"); // ou chercher les @Entity
 
-        Properties hibernateProperties = new Properties();
-        hibernateProperties.put("hibernate.hbm2ddl.auto", "update");
-        hibernateProperties.put("hibernate.show_sql", "false");
-        hibernateProperties.put("hibernate.format_sql", "false");
-        hibernateProperties.put("hibernate.current_session_context_class", "org.springframework.orm.hibernate5.SpringSessionContext");
+        Properties props = new Properties();
+        // "create" : la table est recreee a chaque lancement -> les id repartent de 1
+        props.setProperty("hibernate.hbm2ddl.auto", "create");
+        props.setProperty("hibernate.show_sql", "false");
+        factory.setHibernateProperties(props);
 
-        sessionFactoryBean.setHibernateProperties(hibernateProperties);
-        return sessionFactoryBean;
+        return factory;
     }
 
+    // Ouvre / valide / annule les transactions Hibernate pour @Transactional
     @Bean
-    public PlatformTransactionManager hibernateTransactionManager(SessionFactory sessionFactory) {
-        HibernateTransactionManager transactionManager = new HibernateTransactionManager();
-        transactionManager.setSessionFactory(sessionFactory);
-        return transactionManager;
+    public HibernateTransactionManager transactionManager(SessionFactory sessionFactory) {
+        return new HibernateTransactionManager(sessionFactory);
     }
 }

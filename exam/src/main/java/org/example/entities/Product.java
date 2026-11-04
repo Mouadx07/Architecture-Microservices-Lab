@@ -1,21 +1,25 @@
-package org.example.model;
+package org.example.entities;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
+// Hibernate cree la table a partir de cette classe
 @Entity
-@Table(name = "product")
+@Table(name = "product") // nom exact demande (MySQL sous Linux est sensible a la casse)
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // AUTO_INCREMENT cote MySQL
     private Long id;
 
     private String nom;
-
     private Double prix;
-
     private Integer quantite;
 
+    // Constructeur vide obligatoire pour Hibernate
     public Product() {
     }
 
@@ -25,19 +29,8 @@ public class Product {
         this.quantite = quantite;
     }
 
-    public Product(Long id, String nom, Double prix, Integer quantite) {
-        this.id = id;
-        this.nom = nom;
-        this.prix = prix;
-        this.quantite = quantite;
-    }
-
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getNom() {
@@ -62,15 +55,5 @@ public class Product {
 
     public void setQuantite(Integer quantite) {
         this.quantite = quantite;
-    }
-
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", nom='" + nom + '\'' +
-                ", prix=" + prix +
-                ", quantite=" + quantite +
-                '}';
     }
 }
