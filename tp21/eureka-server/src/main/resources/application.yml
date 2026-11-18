@@ -1,0 +1,13 @@
+server:
+  port: 8761
+
+eureka:
+  client:
+    # le serveur ne s'enregistre pas chez lui-meme
+    register-with-eureka: false
+    fetch-registry: false
+
+logging:
+  level:
+    com.netflix.eureka: OFF
+    com.netflix.discovery: OFF
